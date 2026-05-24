@@ -28,8 +28,9 @@ const adminLinks = [
   { href: "/admin/teachers",           label: "Kelola Guru", icon: Users           },
   { href: "/admin/certifications",     label: "Verifikasi",  icon: Award           },
   { href: "/admin/analytics",          label: "Analytics",   icon: BarChart3       },
-  { href: "/admin/departments",        label: "Kompetensi",     icon: GraduationCap   },
+  { href: "/admin/departments",        label: "Kompetensi",  icon: GraduationCap   },
   { href: "/admin/users",              label: "Users",       icon: Shield          },
+  { href: "/dashboard",                label: "Profil Saya", icon: User            },
 ];
 
 interface DashboardSidebarProps {
@@ -99,23 +100,31 @@ export function DashboardSidebar({ role, userName, userEmail, photoUrl }: Dashbo
         {links.map((link) => {
           const Icon     = link.icon;
           const isActive = pathname === link.href;
+          // Add separator before "Profil Saya" (last item in admin links)
+          const isProfileLink = link.href === "/dashboard" && isAdmin;
           return (
-            <Link
-              key={link.href}
-              href={link.href}
-              title={collapsed && !isMobile ? link.label : undefined}
-              className={cn(
-                "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200",
-                isActive
-                  ? "bg-red-500/15 text-red-400 border border-red-500/25"
-                  : "text-gray-400 hover:text-white hover:bg-white/5"
+            <div key={link.href}>
+              {isProfileLink && (
+                <div className="my-2 border-t border-dark-700/60" />
               )}
-            >
-              <Icon className={cn("w-4 h-4 flex-shrink-0", isActive && "text-red-400")} />
-              {(!collapsed || isMobile) && (
-                <span className="whitespace-nowrap overflow-hidden">{link.label}</span>
-              )}
-            </Link>
+              <Link
+                href={link.href}
+                title={collapsed && !isMobile ? link.label : undefined}
+                className={cn(
+                  "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200",
+                  isActive
+                    ? "bg-red-500/15 text-red-400 border border-red-500/25"
+                    : isProfileLink
+                    ? "text-gray-400 hover:text-white hover:bg-white/5 border border-dashed border-dark-600/50"
+                    : "text-gray-400 hover:text-white hover:bg-white/5"
+                )}
+              >
+                <Icon className={cn("w-4 h-4 flex-shrink-0", isActive && "text-red-400")} />
+                {(!collapsed || isMobile) && (
+                  <span className="whitespace-nowrap overflow-hidden">{link.label}</span>
+                )}
+              </Link>
+            </div>
           );
         })}
       </nav>

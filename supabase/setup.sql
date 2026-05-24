@@ -145,6 +145,9 @@ $$;
 create policy "users_select"   on public.users for select using (true);
 create policy "users_insert"   on public.users for insert with check (true);
 create policy "users_update"   on public.users for update using (auth.uid() = id);
+create policy "users_update_admin" on public.users for update using (
+  public.get_my_role() = 'super_admin'
+);
 
 -- departments
 create policy "depts_select"   on public.departments for select using (true);
