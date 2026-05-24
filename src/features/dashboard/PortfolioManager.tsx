@@ -137,11 +137,15 @@ export function PortfolioManager({ portfolios: initial }: PortfolioManagerProps)
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="project">Proyek</SelectItem>
-                    <SelectItem value="publication">Publikasi</SelectItem>
-                    <SelectItem value="award">Penghargaan</SelectItem>
+                    <SelectItem value="publication">Publikasi / Karya Tulis</SelectItem>
+                    <SelectItem value="award">Penghargaan / Prestasi</SelectItem>
                     <SelectItem value="other">Lainnya</SelectItem>
                   </SelectContent>
                 </Select>
+                <p className="text-xs text-gray-500">
+                  💡 Untuk mencatat prestasi dengan timeline, gunakan menu{" "}
+                  <a href="/dashboard/achievements" className="text-red-400 hover:underline">Prestasi</a>
+                </p>
               </div>
 
               {/* Tahun & Penyelenggara */}
