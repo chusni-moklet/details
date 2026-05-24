@@ -44,6 +44,10 @@ export interface Portfolio {
   description: string;
   media_url: string | null;
   type: "project" | "publication" | "award" | "other";
+  year: number | null;
+  organizer: string | null;
+  level: string | null;
+  certificate_url: string | null;
   created_at: string;
 }
 

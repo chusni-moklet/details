@@ -169,6 +169,10 @@ export interface Database {
           description: string;
           media_url: string | null;
           type: PortfolioType;
+          year: number | null;
+          organizer: string | null;
+          level: string | null;
+          certificate_url: string | null;
           created_at: string;
         };
         Insert: {
@@ -178,6 +182,10 @@ export interface Database {
           description: string;
           media_url?: string | null;
           type: PortfolioType;
+          year?: number | null;
+          organizer?: string | null;
+          level?: string | null;
+          certificate_url?: string | null;
           created_at?: string;
         };
         Update: {
@@ -187,6 +195,10 @@ export interface Database {
           description?: string;
           media_url?: string | null;
           type?: PortfolioType;
+          year?: number | null;
+          organizer?: string | null;
+          level?: string | null;
+          certificate_url?: string | null;
           created_at?: string;
         };
       };

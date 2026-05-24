@@ -23,7 +23,7 @@ interface TeacherRow {
   department: { id: string; name: string; icon: string } | null;
   skills: Array<{ id: string; teacher_id: string; skill_name: string; level: "beginner" | "intermediate" | "advanced" | "expert" }>;
   certifications: Array<{ id: string; teacher_id: string; title: string; issuer: string; issue_date: string; expired_date: string | null; credential_url: string | null; file_url: string | null; is_verified: boolean }>;
-  portfolios: Array<{ id: string; teacher_id: string; title: string; description: string; media_url: string | null; type: "project" | "publication" | "award" | "other"; created_at: string }>;
+  portfolios: Array<{ id: string; teacher_id: string; title: string; description: string; media_url: string | null; type: "project" | "publication" | "award" | "other"; year: number | null; organizer: string | null; level: string | null; certificate_url: string | null; created_at: string }>;
   achievements: Array<{ id: string; teacher_id: string; title: string; year: number; description: string }>;
   profile_views: Array<{ id: string }>;
 }
@@ -121,7 +121,7 @@ export async function getTeacherBySlug(slug: string): Promise<TeacherWithStats |
        department:departments(id, name, icon),
        skills(id, teacher_id, skill_name, level),
        certifications(id, teacher_id, title, issuer, issue_date, expired_date, credential_url, file_url, is_verified),
-       portfolios(id, teacher_id, title, description, media_url, type, created_at),
+       portfolios(id, teacher_id, title, description, media_url, type, year, organizer, level, certificate_url, created_at),
        achievements(id, teacher_id, title, year, description),
        profile_views(id)`
     )
@@ -145,7 +145,7 @@ export async function getTeacherByUserId(userId: string): Promise<TeacherWithSta
        department:departments(id, name, icon),
        skills(id, teacher_id, skill_name, level),
        certifications(id, teacher_id, title, issuer, issue_date, expired_date, credential_url, file_url, is_verified),
-       portfolios(id, teacher_id, title, description, media_url, type, created_at),
+       portfolios(id, teacher_id, title, description, media_url, type, year, organizer, level, certificate_url, created_at),
        achievements(id, teacher_id, title, year, description),
        profile_views(id)`
     )

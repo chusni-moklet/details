@@ -176,11 +176,15 @@ export async function addPortfolio(formData: FormData) {
   if (!teacherId) return { error: "Teacher not found" };
 
   const { error } = await db(supabase, "portfolios").insert({
-    teacher_id:  teacherId,
-    title:       formData.get("title") as string,
-    description: formData.get("description") as string,
-    media_url:   (formData.get("media_url") as string) || null,
-    type:        formData.get("type") as PortfolioType,
+    teacher_id:      teacherId,
+    title:           formData.get("title") as string,
+    description:     formData.get("description") as string,
+    media_url:       (formData.get("media_url") as string) || null,
+    type:            formData.get("type") as PortfolioType,
+    year:            formData.get("year") ? Number(formData.get("year")) : null,
+    organizer:       (formData.get("organizer") as string) || null,
+    level:           (formData.get("level") as string) || null,
+    certificate_url: (formData.get("certificate_url") as string) || null,
   });
 
   if (error) return { error: (error as { message: string }).message };
