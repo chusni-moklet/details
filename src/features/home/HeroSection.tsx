@@ -17,7 +17,7 @@ export function HeroSection({ stats }: HeroSectionProps) {
   const heroStats = [
     { label: "Guru Aktif",  value: stats.totalTeachers,      color: "text-red-400"    },
     { label: "Sertifikasi", value: stats.totalCertifications, color: "text-yellow-400" },
-    { label: "Jurusan",     value: stats.totalDepartments,    color: "text-green-400"  },
+    { label: "Kompetensi",     value: stats.totalDepartments,    color: "text-green-400"  },
   ];
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">

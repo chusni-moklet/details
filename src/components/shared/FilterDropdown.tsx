@@ -28,10 +28,10 @@ export function FilterDropdown({
     <div className="flex flex-wrap gap-3">
       <Select value={selectedDepartment} onValueChange={onDepartmentChange}>
         <SelectTrigger className="w-[180px]">
-          <SelectValue placeholder="Semua Jurusan" />
+          <SelectValue placeholder="Semua Kompetensi" />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="all">Semua Jurusan</SelectItem>
+          <SelectItem value="all">Semua Kompetensi</SelectItem>
           {departments.map((dept) => (
             <SelectItem key={dept.id} value={dept.id}>
               {dept.icon} {dept.name}

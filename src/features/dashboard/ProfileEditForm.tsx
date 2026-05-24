@@ -99,7 +99,7 @@ export function ProfileEditForm({ teacher, departments }: ProfileEditFormProps) 
           </div>
 
           <div className="space-y-2">
-            <Label>Program Keahlian</Label>
+            <Label>Kompetensi</Label>
             <Select value={departmentId} onValueChange={setDepartmentId}>
               <SelectTrigger>
                 <SelectValue placeholder="Pilih jurusan" />

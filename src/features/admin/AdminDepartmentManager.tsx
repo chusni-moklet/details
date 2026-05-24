@@ -45,7 +45,7 @@ export function AdminDepartmentManager({ departments: initial }: AdminDepartment
       } else {
         const newDept = data as Department;
         setDepartments((prev) => [...prev, { ...newDept, teacher_count: 0 }]);
-        toast.success("Jurusan ditambahkan");
+        toast.success("kompetensi ditambahkan");
         setShowForm(false);
         (e.target as HTMLFormElement).reset();
       }
@@ -54,7 +54,7 @@ export function AdminDepartmentManager({ departments: initial }: AdminDepartment
 
   const handleDelete = (id: string, teacherCount: number) => {
     if (teacherCount > 0) {
-      toast.error(`Tidak bisa menghapus jurusan yang masih memiliki ${teacherCount} guru`);
+      toast.error(`Tidak bisa mengHapus kompetensi yang masih memiliki ${teacherCount} guru`);
       return;
     }
 
@@ -64,7 +64,7 @@ export function AdminDepartmentManager({ departments: initial }: AdminDepartment
         toast.error(error.message);
       } else {
         setDepartments((prev) => prev.filter((d) => d.id !== id));
-        toast.success("Jurusan dihapus");
+        toast.success("kompetensi dihapus");
       }
     });
   };
@@ -75,18 +75,18 @@ export function AdminDepartmentManager({ departments: initial }: AdminDepartment
         <p className="text-sm text-gray-400">{departments.length} jurusan</p>
         <Button size="sm" onClick={() => setShowForm(!showForm)}>
           <Plus className="w-4 h-4" />
-          Tambah Jurusan
+          Tambah Kompetensi
         </Button>
       </div>
 
       {/* Add form */}
       {showForm && (
         <div className="rounded-2xl border border-red-500/20 bg-dark-800/60 p-5 space-y-4">
-          <h3 className="font-medium text-white text-sm">Jurusan Baru</h3>
+          <h3 className="font-medium text-white text-sm">Kompetensi Baru</h3>
           <form onSubmit={handleAdd} className="space-y-3">
             <div className="grid grid-cols-2 gap-3">
               <div className="space-y-1.5">
-                <Label htmlFor="dept-name">Nama Jurusan *</Label>
+                <Label htmlFor="dept-name">Nama Kompetensi *</Label>
                 <Input id="dept-name" name="name" required placeholder="Rekayasa Perangkat Lunak" />
               </div>
               <div className="space-y-1.5">
@@ -132,7 +132,7 @@ export function AdminDepartmentManager({ departments: initial }: AdminDepartment
                 onClick={() => handleDelete(dept.id, dept.teacher_count)}
                 disabled={isPending || dept.teacher_count > 0}
                 className="opacity-0 group-hover:opacity-100 transition-opacity p-1.5 rounded-lg bg-red-500/20 text-red-400 hover:bg-red-500/30 disabled:opacity-30 disabled:cursor-not-allowed"
-                aria-label="Hapus jurusan"
+                aria-label="Hapus kompetensi"
               >
                 <X className="w-3.5 h-3.5" />
               </button>

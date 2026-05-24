@@ -39,7 +39,7 @@ export default async function AdminTeachersPage({
             <thead>
               <tr className="border-b border-dark-700/50 bg-dark-900/50">
                 <th className="text-left px-4 py-3 text-gray-400 font-medium">Guru</th>
-                <th className="text-left px-4 py-3 text-gray-400 font-medium hidden md:table-cell">Jurusan</th>
+                <th className="text-left px-4 py-3 text-gray-400 font-medium hidden md:table-cell">Kompetensi</th>
                 <th className="text-left px-4 py-3 text-gray-400 font-medium hidden lg:table-cell">Mapel</th>
                 <th className="text-center px-4 py-3 text-gray-400 font-medium">Sertifikasi</th>
                 <th className="text-center px-4 py-3 text-gray-400 font-medium hidden sm:table-cell">Views</th>

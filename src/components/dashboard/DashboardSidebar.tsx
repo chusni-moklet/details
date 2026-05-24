@@ -28,7 +28,7 @@ const adminLinks = [
   { href: "/admin/teachers",           label: "Kelola Guru", icon: Users           },
   { href: "/admin/certifications",     label: "Verifikasi",  icon: Award           },
   { href: "/admin/analytics",          label: "Analytics",   icon: BarChart3       },
-  { href: "/admin/departments",        label: "Jurusan",     icon: GraduationCap   },
+  { href: "/admin/departments",        label: "Kompetensi",     icon: GraduationCap   },
   { href: "/admin/users",              label: "Users",       icon: Shield          },
 ];
 

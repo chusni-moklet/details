@@ -19,9 +19,9 @@ export function DepartmentsSection({ departments }: DepartmentsSectionProps) {
           viewport={{ once: true }}
           className="text-center mb-12"
         >
-          <h2 className="text-3xl font-bold text-white font-display mb-3">Program Keahlian</h2>
+          <h2 className="text-3xl font-bold text-white font-display mb-3">Kompetensi</h2>
           <p className="text-gray-400 max-w-xl mx-auto">
-            Jelajahi guru berdasarkan program keahlian di SMK Telkom Malang
+            Jelajahi guru berdasarkan Kompetensi di SMK Telkom Malang
           </p>
         </motion.div>
 

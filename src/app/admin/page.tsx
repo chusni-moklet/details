@@ -23,7 +23,7 @@ export default async function AdminPage() {
         <AnalyticsCard title="Total Guru"          value={analytics.total_teachers}      iconName="Users"      color="red"    index={0} />
         <AnalyticsCard title="Total Sertifikasi"   value={analytics.total_certifications} iconName="Award"      color="yellow" index={1} />
         <AnalyticsCard title="Total Views"         value={analytics.total_views}          iconName="Eye"        color="green"  index={2} />
-        <AnalyticsCard title="Jurusan Aktif"       value={analytics.departments.length}   iconName="BarChart3"  color="blue"   index={3} />
+        <AnalyticsCard title="Kompetensi Aktif"       value={analytics.departments.length}   iconName="BarChart3"  color="blue"   index={3} />
       </div>
 
       {/* Department breakdown */}

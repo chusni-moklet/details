@@ -17,7 +17,7 @@ export function StatsSection({ analytics }: StatsSectionProps) {
     { icon: Users,    value: analytics.total_teachers,      label: "Guru Profesional",  color: "text-red-400",    bg: "bg-red-500/10 border-red-500/20"    },
     { icon: Award,    value: analytics.total_certifications, label: "Total Sertifikasi", color: "text-yellow-400", bg: "bg-yellow-500/10 border-yellow-500/20" },
     { icon: Eye,      value: analytics.total_views,          label: "Profile Views",     color: "text-green-400",  bg: "bg-green-500/10 border-green-500/20"  },
-    { icon: BookOpen, value: analytics.departments.length,   label: "Program Keahlian",  color: "text-blue-400",   bg: "bg-blue-500/10 border-blue-500/20"    },
+    { icon: BookOpen, value: analytics.departments.length,   label: "Kompetensi",  color: "text-blue-400",   bg: "bg-blue-500/10 border-blue-500/20"    },
   ];
 
   return (

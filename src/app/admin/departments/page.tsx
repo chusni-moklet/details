@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { createClient } from "@/lib/supabase/server";
 import { AdminDepartmentManager } from "@/features/admin/AdminDepartmentManager";
 
-export const metadata: Metadata = { title: "Kelola Jurusan" };
+export const metadata: Metadata = { title: "Kelola Kompetensi" };
 
 export default async function AdminDepartmentsPage() {
   const supabase = await createClient();
@@ -26,8 +26,8 @@ export default async function AdminDepartmentsPage() {
   return (
     <div className="p-6 lg:p-8">
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-white font-display">Kelola Jurusan</h1>
-        <p className="text-gray-400 mt-1">Tambah dan kelola program keahlian</p>
+        <h1 className="text-2xl font-bold text-white font-display">Kelola Kompetensi</h1>
+        <p className="text-gray-400 mt-1">Tambah dan kelola Kompetensi</p>
       </div>
       <AdminDepartmentManager departments={departments} />
     </div>
