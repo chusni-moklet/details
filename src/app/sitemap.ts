@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { createClient } from "@/lib/supabase/server";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "https://details.moklet.com";
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "https://details-beta.vercel.app";
 
   const supabase = await createClient();
   const { data } = await supabase

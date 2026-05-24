@@ -5,7 +5,20 @@ import { motion } from "framer-motion";
 import { ArrowRight, GraduationCap, Sparkles, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-export function HeroSection() {
+interface HeroSectionProps {
+  stats: {
+    totalTeachers: number;
+    totalCertifications: number;
+    totalDepartments: number;
+  };
+}
+
+export function HeroSection({ stats }: HeroSectionProps) {
+  const heroStats = [
+    { label: "Guru Aktif",  value: stats.totalTeachers,      color: "text-red-400"    },
+    { label: "Sertifikasi", value: stats.totalCertifications, color: "text-yellow-400" },
+    { label: "Jurusan",     value: stats.totalDepartments,    color: "text-green-400"  },
+  ];
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background */}
@@ -91,14 +104,10 @@ export function HeroSection() {
               <div className="absolute top-0 left-8 right-8 h-0.5 bg-gradient-to-r from-transparent via-red-500 to-transparent rounded-full" />
 
               <div className="grid grid-cols-3 gap-4">
-                {[
-                  { label: "Guru Aktif",    value: "120+", color: "text-red-400"    },
-                  { label: "Sertifikasi",   value: "500+", color: "text-yellow-400" },
-                  { label: "Jurusan",       value: "8",    color: "text-green-400"  },
-                ].map((stat) => (
+                {heroStats.map((stat) => (
                   <div key={stat.label} className="text-center">
                     <div className={`text-2xl sm:text-3xl font-bold ${stat.color}`}>
-                      {stat.value}
+                      {stat.value.toLocaleString("id-ID")}
                     </div>
                     <div className="text-xs sm:text-sm text-gray-400 mt-1">{stat.label}</div>
                   </div>

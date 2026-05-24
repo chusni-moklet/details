@@ -53,7 +53,7 @@ export function CTASection() {
           </div>
 
           <p className="text-xs text-gray-500">
-            Hanya untuk email @moklet.com dan @smktelkom-mlg.sch.id
+            Hanya untuk email @smktelkom-mlg.sch.id
           </p>
         </motion.div>
       </div>

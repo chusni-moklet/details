@@ -21,7 +21,13 @@ export default async function HomePage() {
     <div className="min-h-screen bg-dark-950">
       <Navbar />
       <main>
-        <HeroSection />
+        <HeroSection
+          stats={{
+            totalTeachers:       analytics.total_teachers,
+            totalCertifications: analytics.total_certifications,
+            totalDepartments:    departments.length,
+          }}
+        />
         <StatsSection analytics={analytics} />
         <FeaturedTeachers teachers={featured} />
         <DepartmentsSection departments={departments} />
