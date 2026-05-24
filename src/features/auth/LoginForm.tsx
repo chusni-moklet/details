@@ -13,7 +13,7 @@ interface LoginFormProps {
 
 const errorMessages: Record<string, string> = {
   oauth_failed:   "Login gagal. Silakan coba lagi.",
-  access_denied:  "Akses ditolak. Gunakan email sekolah (@moklet.com atau @smktelkom-mlg.sch.id).",
+  access_denied:  "Akses ditolak. Gunakan email sekolah (@smktelkom-mlg.sch.id).",
   invalid_domain: "Email tidak terdaftar. Hanya email sekolah yang diizinkan.",
   no_code:        "Proses autentikasi gagal. Silakan coba lagi.",
 };
@@ -77,7 +77,6 @@ export function LoginForm({ error }: LoginFormProps) {
           <Shield className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" />
           <p className="text-xs text-gray-400 leading-relaxed">
             Hanya email dengan domain{" "}
-            <span className="text-red-400 font-medium">@moklet.com</span> atau{" "}
             <span className="text-red-400 font-medium">@smktelkom-mlg.sch.id</span>{" "}
             yang dapat login ke sistem ini.
           </p>
