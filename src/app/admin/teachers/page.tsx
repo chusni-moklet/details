@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { createClient } from "@/lib/supabase/server";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { getInitials } from "@/lib/utils";
 import { ExternalLink, Award, Eye } from "lucide-react";
 import { getTeachers } from "@/services/teachers";
+import { DeleteTeacherButton } from "@/features/admin/DeleteTeacherButton";
 
 export const metadata: Metadata = { title: "Kelola Guru" };
 
@@ -16,7 +16,7 @@ export default async function AdminTeachersPage({
   searchParams: Promise<{ q?: string; page?: string }>;
 }) {
   const params = await searchParams;
-  const page = Number(params.page ?? 1);
+  const page   = Number(params.page ?? 1);
 
   const { teachers, total } = await getTeachers(
     { query: params.q, sort: "name" },
@@ -44,12 +44,13 @@ export default async function AdminTeachersPage({
                 <th className="text-center px-4 py-3 text-gray-400 font-medium">Sertifikasi</th>
                 <th className="text-center px-4 py-3 text-gray-400 font-medium hidden sm:table-cell">Views</th>
                 <th className="text-center px-4 py-3 text-gray-400 font-medium">Profil</th>
-                <th className="px-4 py-3"></th>
+                <th className="px-4 py-3 text-gray-400 font-medium text-center">Aksi</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-dark-700/30">
               {teachers.map((teacher) => (
-                <tr key={teacher.id} className="hover:bg-dark-800/60 transition-colors">
+                <tr key={teacher.id} className="hover:bg-dark-800/60 transition-colors group">
+                  {/* Guru */}
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-3">
                       <div className="w-9 h-9 rounded-lg overflow-hidden border border-dark-600 flex-shrink-0">
@@ -75,6 +76,8 @@ export default async function AdminTeachersPage({
                       </div>
                     </div>
                   </td>
+
+                  {/* Jurusan */}
                   <td className="px-4 py-3 hidden md:table-cell">
                     {teacher.department ? (
                       <Badge variant="secondary" className="text-xs">
@@ -84,21 +87,29 @@ export default async function AdminTeachersPage({
                       <span className="text-gray-600 text-xs">—</span>
                     )}
                   </td>
+
+                  {/* Mapel */}
                   <td className="px-4 py-3 hidden lg:table-cell">
                     <span className="text-gray-300 text-xs">{teacher.subject ?? "—"}</span>
                   </td>
+
+                  {/* Sertifikasi */}
                   <td className="px-4 py-3 text-center">
                     <span className="flex items-center justify-center gap-1 text-amber-400 text-xs">
                       <Award className="w-3.5 h-3.5" />
                       {teacher.certification_count}
                     </span>
                   </td>
+
+                  {/* Views */}
                   <td className="px-4 py-3 text-center hidden sm:table-cell">
                     <span className="flex items-center justify-center gap-1 text-red-400 text-xs">
                       <Eye className="w-3.5 h-3.5" />
                       {teacher.view_count}
                     </span>
                   </td>
+
+                  {/* Profil completion */}
                   <td className="px-4 py-3 text-center">
                     <div className="flex items-center justify-center">
                       <div className="w-16 h-1.5 bg-dark-700 rounded-full overflow-hidden">
@@ -110,12 +121,20 @@ export default async function AdminTeachersPage({
                       <span className="text-xs text-gray-500 ml-2">{teacher.completion_percentage}%</span>
                     </div>
                   </td>
+
+                  {/* Aksi */}
                   <td className="px-4 py-3">
-                    <Button asChild size="icon-sm" variant="ghost">
-                      <Link href={`/teacher/${teacher.slug}`} target="_blank">
-                        <ExternalLink className="w-3.5 h-3.5" />
-                      </Link>
-                    </Button>
+                    <div className="flex items-center justify-center gap-1">
+                      <Button asChild size="icon-sm" variant="ghost">
+                        <Link href={`/teacher/${teacher.slug}`} target="_blank">
+                          <ExternalLink className="w-3.5 h-3.5" />
+                        </Link>
+                      </Button>
+                      <DeleteTeacherButton
+                        teacherId={teacher.id}
+                        teacherName={teacher.full_name}
+                      />
+                    </div>
                   </td>
                 </tr>
               ))}
