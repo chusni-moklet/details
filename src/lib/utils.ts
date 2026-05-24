@@ -47,7 +47,6 @@ export function isSchoolEmail(email: string): boolean {
     "moklet.com",
     "smktelkom-mlg.sch.id",
     "student.moklet.com",
-    "gmail.com", // TEMPORARY: hapus setelah testing selesai
   ];
   const domain = email.split("@")[1]?.toLowerCase();
   return allowedDomains.includes(domain);
