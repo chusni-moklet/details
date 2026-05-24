@@ -39,6 +39,11 @@ export function TeacherProfile({ teacher }: TeacherProfileProps) {
     { icon: AtSign,    href: teacher.instagram, label: "Instagram", color: "hover:text-pink-400" },
   ].filter((s) => s.href);
 
+  // Split portfolios: awards go to Prestasi tab, rest go to Portfolio tab
+  const awardPortfolios    = teacher.portfolios?.filter((p) => p.type === "award") ?? [];
+  const nonAwardPortfolios = teacher.portfolios?.filter((p) => p.type !== "award") ?? [];
+  const totalAchievements  = (teacher.achievements?.length ?? 0) + awardPortfolios.length;
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -222,10 +227,10 @@ export function TeacherProfile({ teacher }: TeacherProfileProps) {
                 Sertifikasi ({teacher.certification_count})
               </TabsTrigger>
               <TabsTrigger value="portfolio">
-                Portfolio ({teacher.portfolio_count})
+                Portfolio ({nonAwardPortfolios.length})
               </TabsTrigger>
               <TabsTrigger value="achievements">
-                Prestasi ({teacher.achievements?.length ?? 0})
+                Prestasi ({totalAchievements})
               </TabsTrigger>
             </TabsList>
 
@@ -254,11 +259,11 @@ export function TeacherProfile({ teacher }: TeacherProfileProps) {
             </TabsContent>
 
             <TabsContent value="portfolio">
-              {(teacher.portfolios?.length ?? 0) === 0 ? (
+              {nonAwardPortfolios.length === 0 ? (
                 <EmptyState message="Belum ada portfolio" />
               ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {teacher.portfolios?.map((portfolio) => (
+                  {nonAwardPortfolios.map((portfolio) => (
                     <PortfolioCard key={portfolio.id} portfolio={portfolio} />
                   ))}
                 </div>
@@ -266,10 +271,23 @@ export function TeacherProfile({ teacher }: TeacherProfileProps) {
             </TabsContent>
 
             <TabsContent value="achievements">
-              {(teacher.achievements?.length ?? 0) === 0 ? (
+              {totalAchievements === 0 ? (
                 <EmptyState message="Belum ada prestasi" />
               ) : (
-                <TimelineComponent achievements={teacher.achievements ?? []} />
+                <div className="space-y-6">
+                  {/* Portfolio tipe award */}
+                  {awardPortfolios.length > 0 && (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      {awardPortfolios.map((portfolio) => (
+                        <PortfolioCard key={portfolio.id} portfolio={portfolio} />
+                      ))}
+                    </div>
+                  )}
+                  {/* Achievements timeline */}
+                  {(teacher.achievements?.length ?? 0) > 0 && (
+                    <TimelineComponent achievements={teacher.achievements ?? []} />
+                  )}
+                </div>
               )}
             </TabsContent>
           </Tabs>
