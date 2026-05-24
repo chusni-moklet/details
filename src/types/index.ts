@@ -48,6 +48,7 @@ export interface Portfolio {
   organizer: string | null;
   level: string | null;
   certificate_url: string | null;
+  is_verified: boolean;
   created_at: string;
 }
 

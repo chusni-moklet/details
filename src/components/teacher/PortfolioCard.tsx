@@ -43,7 +43,14 @@ export function PortfolioCard({ portfolio }: PortfolioCardProps) {
             </div>
             <Badge variant="secondary" className="text-xs">{config.label}</Badge>
           </div>
-          <span className="text-xs text-gray-500 flex-shrink-0">{formatDate(portfolio.created_at)}</span>
+          <div className="flex items-center gap-1.5">
+            {!portfolio.is_verified && (
+              <Badge variant="warning" className="text-xs py-0">
+                Pending
+              </Badge>
+            )}
+            <span className="text-xs text-gray-500 flex-shrink-0">{formatDate(portfolio.created_at)}</span>
+          </div>
         </div>
 
         {/* Title */}
@@ -77,6 +84,13 @@ export function PortfolioCard({ portfolio }: PortfolioCardProps) {
         <p className="text-xs text-gray-400 leading-relaxed">
           {truncate(portfolio.description, 80)}
         </p>
+
+        {/* Pending info */}
+        {!portfolio.is_verified && (
+          <p className="text-xs text-yellow-500/70 mt-1">
+            Tidak tampil di profil publik sampai diverifikasi admin
+          </p>
+        )}
 
         {/* Links */}
         <div className="flex items-center gap-3 pt-1">

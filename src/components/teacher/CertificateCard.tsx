@@ -5,15 +5,20 @@ import type { Certification } from "@/types";
 
 interface CertificateCardProps {
   cert: Certification;
+  showPending?: boolean; // show pending badge even if not verified (for dashboard)
 }
 
-export function CertificateCard({ cert }: CertificateCardProps) {
+export function CertificateCard({ cert, showPending = true }: CertificateCardProps) {
   const isExpired = cert.expired_date
     ? new Date(cert.expired_date) < new Date()
     : false;
 
   return (
-    <div className="flex items-start gap-4 p-4 rounded-xl border border-dark-700/50 bg-dark-800/40 hover:border-red-500/25 transition-all duration-200 group">
+    <div className={`flex items-start gap-4 p-4 rounded-xl border transition-all duration-200 group ${
+      cert.is_verified
+        ? "border-dark-700/50 bg-dark-800/40 hover:border-red-500/25"
+        : "border-yellow-500/20 bg-yellow-500/5"
+    }`}>
       <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center">
         <Award className="w-5 h-5 text-yellow-400" />
       </div>
@@ -32,12 +37,12 @@ export function CertificateCard({ cert }: CertificateCardProps) {
                 <CheckCircle className="w-3 h-3 mr-1" />
                 Verified
               </Badge>
-            ) : (
+            ) : showPending ? (
               <Badge variant="warning" className="text-xs">
                 <Clock className="w-3 h-3 mr-1" />
-                Pending
+                Menunggu Verifikasi
               </Badge>
-            )}
+            ) : null}
           </div>
         </div>
 
@@ -63,6 +68,13 @@ export function CertificateCard({ cert }: CertificateCardProps) {
             </a>
           )}
         </div>
+
+        {/* Info for unverified */}
+        {!cert.is_verified && showPending && (
+          <p className="text-xs text-yellow-500/70 mt-1.5">
+            Tidak tampil di profil publik sampai diverifikasi admin
+          </p>
+        )}
       </div>
     </div>
   );

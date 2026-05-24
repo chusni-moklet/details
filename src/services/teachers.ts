@@ -23,19 +23,24 @@ interface TeacherRow {
   department: { id: string; name: string; icon: string } | null;
   skills: Array<{ id: string; teacher_id: string; skill_name: string; level: "beginner" | "intermediate" | "advanced" | "expert" }>;
   certifications: Array<{ id: string; teacher_id: string; title: string; issuer: string; issue_date: string; expired_date: string | null; credential_url: string | null; file_url: string | null; is_verified: boolean }>;
-  portfolios: Array<{ id: string; teacher_id: string; title: string; description: string; media_url: string | null; type: "project" | "publication" | "award" | "other"; year: number | null; organizer: string | null; level: string | null; certificate_url: string | null; created_at: string }>;
+  portfolios: Array<{ id: string; teacher_id: string; title: string; description: string; media_url: string | null; type: "project" | "publication" | "award" | "other"; year: number | null; organizer: string | null; level: string | null; certificate_url: string | null; is_verified: boolean; created_at: string }>;
   achievements: Array<{ id: string; teacher_id: string; title: string; year: number; description: string }>;
   profile_views: Array<{ id: string }>;
 }
 
 function toTeacherWithStats(t: TeacherRow): TeacherWithStats {
+  // Public profile only shows verified certifications and portfolios
+  const verifiedCerts     = t.certifications?.filter((c) => c.is_verified) ?? [];
+  const verifiedPortfolios = t.portfolios?.filter((p) => p.is_verified) ?? [];
+
   return {
     ...t,
-    // department can be null from DB but TeacherWithStats expects undefined
     department: t.department ?? undefined,
-    certification_count: t.certifications?.length ?? 0,
+    certifications: verifiedCerts,
+    portfolios: verifiedPortfolios,
+    certification_count: verifiedCerts.length,
     view_count: t.profile_views?.length ?? 0,
-    portfolio_count: t.portfolios?.length ?? 0,
+    portfolio_count: verifiedPortfolios.length,
     completion_percentage: calculateProfileCompletion({
       photo_url: t.photo_url,
       bio: t.bio,
@@ -44,8 +49,8 @@ function toTeacherWithStats(t: TeacherRow): TeacherWithStats {
       experience: t.experience,
       linkedin: t.linkedin,
       skills: t.skills,
-      certifications: t.certifications,
-      portfolios: t.portfolios,
+      certifications: verifiedCerts,
+      portfolios: verifiedPortfolios,
     }),
   };
 }
@@ -121,7 +126,7 @@ export async function getTeacherBySlug(slug: string): Promise<TeacherWithStats |
        department:departments(id, name, icon),
        skills(id, teacher_id, skill_name, level),
        certifications(id, teacher_id, title, issuer, issue_date, expired_date, credential_url, file_url, is_verified),
-       portfolios(id, teacher_id, title, description, media_url, type, year, organizer, level, certificate_url, created_at),
+       portfolios(id, teacher_id, title, description, media_url, type, year, organizer, level, certificate_url, is_verified, created_at),
        achievements(id, teacher_id, title, year, description),
        profile_views(id)`
     )
@@ -145,7 +150,7 @@ export async function getTeacherByUserId(userId: string): Promise<TeacherWithSta
        department:departments(id, name, icon),
        skills(id, teacher_id, skill_name, level),
        certifications(id, teacher_id, title, issuer, issue_date, expired_date, credential_url, file_url, is_verified),
-       portfolios(id, teacher_id, title, description, media_url, type, year, organizer, level, certificate_url, created_at),
+       portfolios(id, teacher_id, title, description, media_url, type, year, organizer, level, certificate_url, is_verified, created_at),
        achievements(id, teacher_id, title, year, description),
        profile_views(id)`
     )

@@ -309,6 +309,31 @@ export async function verifyCertification(certId: string, verified: boolean) {
   return { success: true };
 }
 
+export async function verifyPortfolio(portfolioId: string, verified: boolean) {
+  const { supabase, user } = await getAuthUser();
+  if (!user) redirect("/auth/login");
+
+  const { data: userData } = await supabase
+    .from("users")
+    .select("role")
+    .eq("id", user.id)
+    .single();
+
+  const role = (userData as { role: string } | null)?.role;
+  if (!role || !["super_admin", "admin_jurusan"].includes(role)) {
+    return { error: "Unauthorized" };
+  }
+
+  const { error } = await db(supabase, "portfolios")
+    .update({ is_verified: verified })
+    .eq("id", portfolioId);
+
+  if (error) return { error: (error as { message: string }).message };
+
+  revalidatePath("/admin/certifications");
+  return { success: true };
+}
+
 export async function adminDeleteTeacher(teacherId: string) {
   const { supabase, user } = await getAuthUser();
   if (!user) redirect("/auth/login");
