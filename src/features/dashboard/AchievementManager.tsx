@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { toast } from "sonner";
-import { Plus, Loader2, X, Trophy } from "lucide-react";
+import { Plus, Loader2, X, Trophy, Upload } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -19,10 +19,30 @@ export function AchievementManager({ achievements: initial }: AchievementManager
   const [achievements, setAchievements] = useState(initial);
   const [open, setOpen]                 = useState(false);
   const [isPending, startTransition]    = useTransition();
+  const [uploading, setUploading]       = useState(false);
+  const [fileUrl, setFileUrl]           = useState("");
+
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (file.size > 10 * 1024 * 1024) { toast.error("File terlalu besar (max 10MB)"); return; }
+    setUploading(true);
+    try {
+      const fd = new FormData();
+      fd.append("file", file);
+      const res = await fetch("/api/upload/certificate", { method: "POST", body: fd });
+      if (!res.ok) throw new Error();
+      const data = await res.json() as { url: string };
+      setFileUrl(data.url);
+      toast.success("File berhasil diupload");
+    } catch { toast.error("Gagal mengupload file"); }
+    finally { setUploading(false); }
+  };
 
   const handleAdd = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
+    if (fileUrl) formData.set("file_url", fileUrl);
     startTransition(async () => {
       const result = await addAchievement(formData);
       if (result?.error) {
@@ -30,6 +50,7 @@ export function AchievementManager({ achievements: initial }: AchievementManager
       } else {
         toast.success("Prestasi ditambahkan");
         setOpen(false);
+        setFileUrl("");
         window.location.reload();
       }
     });
@@ -69,6 +90,32 @@ export function AchievementManager({ achievements: initial }: AchievementManager
               <div className="space-y-2">
                 <Label htmlFor="a-desc">Deskripsi</Label>
                 <Textarea id="a-desc" name="description" placeholder="Detail prestasi..." rows={3} />
+              </div>
+
+              {/* Upload bukti */}
+              <div className="space-y-2">
+                <Label>Upload Bukti / Sertifikat (opsional)</Label>
+                <div className="flex items-center gap-3">
+                  <label className="flex-1 cursor-pointer">
+                    <input type="file" accept="image/*,.pdf" className="hidden" onChange={handleFileUpload} disabled={uploading} />
+                    <div className={`flex items-center gap-2 px-3 py-2.5 rounded-lg border border-dashed text-sm transition-colors ${
+                      fileUrl ? "border-green-500/50 bg-green-500/10 text-green-400" : "border-dark-600 hover:border-red-500/50 text-gray-400"
+                    }`}>
+                      {uploading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Upload className="w-4 h-4" />}
+                      {uploading ? "Mengupload..." : fileUrl ? "✓ File terupload" : "Pilih file (JPG/PNG/PDF, max 10MB)"}
+                    </div>
+                  </label>
+                  {fileUrl && (
+                    <button type="button" onClick={() => setFileUrl("")} className="p-1.5 rounded-lg text-gray-500 hover:text-red-400">
+                      <X className="w-3.5 h-3.5" />
+                    </button>
+                  )}
+                </div>
+                {fileUrl && (
+                  <a href={fileUrl} target="_blank" rel="noopener noreferrer" className="text-xs text-red-400 hover:underline">
+                    Lihat file →
+                  </a>
+                )}
               </div>
               <div className="flex gap-3 pt-2">
                 <Button type="submit" disabled={isPending} className="flex-1">
