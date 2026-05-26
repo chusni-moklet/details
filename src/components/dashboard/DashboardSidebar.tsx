@@ -7,7 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   LayoutDashboard, User, Award, FolderOpen, Settings, LogOut,
   GraduationCap, ChevronLeft, ChevronRight, Trophy, BarChart3,
-  Users, Shield, Menu, X,
+  Users, Shield, Menu, X, Target, Building2, ClipboardList,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { createClient } from "@/lib/supabase/client";
@@ -20,6 +20,7 @@ const teacherLinks = [
   { href: "/dashboard/certifications", label: "Sertifikasi", icon: Award           },
   { href: "/dashboard/portfolio",      label: "Portfolio",   icon: FolderOpen      },
   { href: "/dashboard/achievements",   label: "Prestasi",    icon: Trophy          },
+  { href: "/dashboard/ski",            label: "SKI",         icon: Target          },
   { href: "/dashboard/settings",       label: "Pengaturan",  icon: Settings        },
 ];
 
@@ -30,6 +31,9 @@ const adminLinks = [
   { href: "/admin/analytics",          label: "Analytics",   icon: BarChart3       },
   { href: "/admin/departments",        label: "Kompetensi",  icon: GraduationCap   },
   { href: "/admin/users",              label: "Users",       icon: Shield          },
+  { href: "/dashboard/ski/monitoring", label: "Monitoring SKI", icon: ClipboardList },
+  { href: "/dashboard/organization",   label: "Organisasi",  icon: Building2       },
+  { href: "/dashboard/roles",          label: "Role SKI",    icon: Target          },
   { href: "/dashboard",                label: "Profil Saya", icon: User            },
 ];
 
