@@ -40,6 +40,26 @@ export async function createOrganizationalUnit(formData: FormData) {
   return { success: true };
 }
 
+export async function updateOrganizationalUnit(unitId: string, formData: FormData) {
+  const { supabase, user } = await getAuthUser();
+  if (!user) redirect("/auth/login");
+
+  const level = await getUserRoleLevel(user.id);
+  if (level > 2) return { error: "Tidak memiliki akses" };
+
+  const { error } = await db(supabase, "organizational_units")
+    .update({
+      name:        formData.get("name") as string,
+      description: (formData.get("description") as string) || null,
+      parent_id:   (formData.get("parent_id") as string) || null,
+    })
+    .eq("id", unitId);
+
+  if (error) return { error: error.message };
+  revalidatePath("/dashboard/organization");
+  return { success: true };
+}
+
 export async function deleteOrganizationalUnit(unitId: string) {
   const { supabase, user } = await getAuthUser();
   if (!user) redirect("/auth/login");

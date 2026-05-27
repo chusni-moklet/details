@@ -59,6 +59,11 @@ export default async function OrganizationPage() {
           {/* Tree */}
           <div className="lg:col-span-2 rounded-2xl border border-dark-700/50 bg-dark-800/60 p-6">
             <h2 className="font-semibold text-white mb-4">Hierarki Unit</h2>
+            {canManage && tree.length > 0 && (
+              <p className="text-xs text-gray-500 mb-3">
+                💡 Hover pada unit untuk melihat tombol edit dan hapus
+              </p>
+            )}
             {tree.length === 0 ? (
               <div className="text-center py-12">
                 <Building2 className="w-10 h-10 text-gray-600 mx-auto mb-3" />
@@ -68,7 +73,7 @@ export default async function OrganizationPage() {
                 </p>
               </div>
             ) : (
-              <HierarchyTree units={tree} />
+              <HierarchyTree units={tree} canManage={canManage} />
             )}
           </div>
 
